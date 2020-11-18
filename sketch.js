@@ -8,7 +8,7 @@ var ground, invisibleGround, groundImage;
 var cloudsGroup, cloudImage;
 var obstaclesGroup, obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6;
 
-var h,a;
+var h,k,a;
 
 var score;
 var gameOverImg,restartImg
@@ -50,7 +50,8 @@ function setup() {
  h = createSprite(width-400,height-490,width+999,height+999);
 
   trex.scale = 0.5;
-  
+  k=createSprite(width-1000,height-600)
+k.addImage(restartImg)
   ground = createSprite(width,height-130,20);
   ground.addImage("ground",groundImage);
   ground.x = ground.width /2;
@@ -93,7 +94,10 @@ function draw() {
   text("Score: "+ score,width-200,height-600);
   
    console.log(trex.y)
-
+if (mousePressedOver(k)) {
+  trex.velocityY = -12;
+    jumpSound.play();
+}
    if (a.isTouching(h)&&mousePressedOver(h)&& trex.y >= height-150) {
     trex.velocityY = -12;
     jumpSound.play();
