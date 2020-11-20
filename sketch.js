@@ -93,6 +93,9 @@ function draw() {
   fill("red")
   text("Score: "+ score,width-200,height-600);
   
+  camera.y=mouseY
+    camera.x=mouseX
+  
    console.log(trex.y)
 if (mousePressedOver(k)) {
   trex.velocityY = -12;
