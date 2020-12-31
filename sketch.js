@@ -11,8 +11,8 @@ var obstaclesGroup, obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obsta
 var h,k,a;
 
 var score;
-var gameOverImg,restartImg
-var jumpSound , checkPointSound, dieSound
+var gameOverImg,restartImg,wq
+var jumpSound , checkPointSound, dieSound,jump
 
 function preload(){
   trex_running = loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -28,7 +28,8 @@ function preload(){
   obstacle4 = loadImage("obstacle4.png");
   obstacle5 = loadImage("obstacle5.png");
   obstacle6 = loadImage("obstacle6.png");
-  
+  wq=loadImage("W.png")
+  jump=loadImage("long-jump.png")
   restartImg = loadImage("restart.png")
   gameOverImg = loadImage("gameOver.png")
   
@@ -43,19 +44,20 @@ function setup() {
   var message = "This is a message";
  console.log(message)
   
-  trex = createSprite(50,100,20,50);
+  trex = createSprite(width-990,height-190,20,50);
   trex.addAnimation("running", trex_running);
   trex.addAnimation("collided", trex_collided);
   
  h = createSprite(width-400,height-490,width+999,height+999);
 
   trex.scale = 0.5;
-  k=createSprite(width-1000,height-600)
-k.addImage(restartImg)
+  
   ground = createSprite(width,height-130,20);
   ground.addImage("ground",groundImage);
   ground.x = ground.width /2;
   
+
+
   gameOver = createSprite(width-500,height-360);
   gameOver.addImage(gameOverImg);
  
@@ -82,7 +84,14 @@ k.addImage(restartImg)
 h.visible=false
 a.visible=false
   score = 0;
-  
+
+  k=createSprite(width-100,height-160)
+k.addImage(jump)
+k.scale=0.3
+
+//w.scale=width/2,height/2
+//k.depth=obstaclesGroup.depth+1
+
 }
 
 function draw() {
@@ -93,9 +102,12 @@ function draw() {
   fill("red")
   text("Score: "+ score,width-200,height-600);
   
+  var temp=k.depth;
+  k.depth=obstacle1.depth;
+  obstacle1.depth=temp;
 
    console.log(trex.y)
-if (mousePressedOver(k)) {
+if (mousePressedOver(k)&& trex.y >= height-150) {
   trex.velocityY = -12;
     jumpSound.play();
 }
@@ -127,10 +139,7 @@ if (mousePressedOver(k)) {
       jumpSound.play();
     }
     
-    if(mousePressedOver(h)&& trex.y >= height-150) {
-     trex.velocityY = -12;
-     jumpSound.play();
-  }
+    
 
     //add gravity
     trex.velocityY = trex.velocityY + 0.8
