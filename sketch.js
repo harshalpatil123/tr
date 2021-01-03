@@ -39,12 +39,12 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(displayWidth,displayHeight);
+  createCanvas(windowWidth,windowHeight);
 
   var message = "This is a message";
  console.log(message)
   
-  trex = createSprite(displayWidth-990,displayHeight-190,20,50);
+  trex = createSprite(width-990,height-190,20,50);
   trex.addAnimation("running", trex_running);
   trex.addAnimation("collided", trex_collided);
   
@@ -52,24 +52,24 @@ function setup() {
 
   trex.scale = 0.5;
   
-  ground = createSprite(displayWidth,displayHeight-130,20);
+  ground = createSprite(width,height-130,20);
   ground.addImage("ground",groundImage);
   ground.x = ground.width /2;
   
 
 
-  gameOver = createSprite(displayWidth-500,displayHeight-360);
+  gameOver = createSprite(width-500,height-360);
   gameOver.addImage(gameOverImg);
  
   
-  restart = createSprite(displayWidth-500,displayHeight-300);
+  restart = createSprite(width-500,height-300);
   restart.addImage(restartImg);
   
 // y=createSprite(200,200);
   gameOver.scale = 0.5;
   restart.scale = 0.5;
   
-  invisibleGround = createSprite(displayWidth-800,displayHeight-120,999,10);
+  invisibleGround = createSprite(width-800,height-120,999,10);
   invisibleGround.visible = false;
 
   
@@ -85,7 +85,7 @@ h.visible=false
 a.visible=false
   score = 0;
 
-  k=createSprite(displayWidth-100,displayHeight-160)
+  k=createSprite(width-100,height-160)
 k.addImage(jump)
 k.scale=0.3
 
@@ -190,7 +190,12 @@ if (mousePressedOver(k)&& trex.y >= height-150) {
   //stop trex from falling down
   trex.collide(invisibleGround);
   
-  
+  if(score===1000){
+    fill('black')
+    textSize('32')
+    text("YOU WON",width/2,height/2)
+    h();
+  }
 
 
   drawSprites();
@@ -260,5 +265,12 @@ function spawnClouds() {
     //add each cloud to the group
     cloudsGroup.add(cloud);
   }
+}
+
+function h() {
+  obstaclesGroup.velocityX=0
+    cloudsGroup.velocityX=0
+     ground.velocityX=0
+     gamestate=END
 }
 
